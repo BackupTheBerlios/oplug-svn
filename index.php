@@ -1,5 +1,5 @@
 <?
-// sprawdzam
+// komentarz
 
 echo "Goooł Planet!";
 
