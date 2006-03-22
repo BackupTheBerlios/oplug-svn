@@ -1,4 +1,5 @@
 <?
+// sprawdzam
 
 echo "Goooł Planet!";
 
