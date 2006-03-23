@@ -4,4 +4,8 @@
 
 echo "Goooł Planet!";
 
+require_once("rss_class.php");
+
+$rss = new RSS();
+
 ?>
