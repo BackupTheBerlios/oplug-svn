@@ -33,9 +33,6 @@ class RSS {
 	
 
 	function RSS() {
-		print "<br/>RSS feed reader v" . $this->version . " by OpLUG<br/>";
-		print "RSS feed and Blogger Atom support<br/><br/>";
-	
 		$this->get_channels($this->chanfile);
 
 		$a=0;
@@ -43,21 +40,6 @@ class RSS {
 		while($this->channels[$a]!=null) {
 			ereg('^[A-Za-z0-9:\/\.\-]*',$this->channels[$a++],$chan);
 			$this->parse($chan[0]);
-		}
-
-		$this->print_to_file($filename);
-		
-		print "</body></html>";		
-	}
-
-	function print_to_file($filename) {
-		$a=0;
-		while($a<=$this->curID) {
-			print "<hr/>";
-			print "<b>".$this->rssData[$a]["title"]."</b> - ";
-			print $this->rssData[$a]["date"]."<br/>";
-			print $this->rssData[$a]["div"]."<br/><br/>";
-			$a++;
 		}
 
 	}

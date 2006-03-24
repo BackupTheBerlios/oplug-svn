@@ -23,6 +23,20 @@ require_once("rss_class.php");
 
 $rss = new RSS();
 
+$a=0;
+
+while($a<=$rss->curID) {
+	print "<div class=\"notka\">";
+	print "<h2>".$rss->rssData[$a]["title"]."</h2>";
+	print "<div class=\"data\">".$rss->rssData[$a]["date"]."</div>";
+	print "<div class=\"tresc\">".$rss->rssData[$a]["div"]."</div>";
+	print "</div>";
+	$a++;
+}
+
+print "<br/>RSS feed reader v" . $rss->version . " by OpLUG<br/>";
+print "RSS feed and Blogger Atom support<br/><br/>";
+
 ?>
 
 </body>
