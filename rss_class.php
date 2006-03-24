@@ -33,9 +33,6 @@ class RSS {
 	
 
 	function RSS() {
-		print "<html><head>";
-		print "<meta http-equiv=\"content-type\" content=\"application/xhtml+xml; charset=UTF-8\"/>";
-		print "</head><body>";
 		print "<br/>RSS feed reader v" . $this->version . " by OpLUG<br/>";
 		print "RSS feed and Blogger Atom support<br/><br/>";
 	
