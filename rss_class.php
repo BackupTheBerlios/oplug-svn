@@ -120,7 +120,11 @@ class RSS {
 	function XMLcharacterData($parser, $data){
 		if($this->inEntry) {
 			$curID = $this->curID;
-			if($this->isDate) $this->rssData[$curID]["date"] = $data;
+			if($this->isDate) {
+				$data = str_replace("T"," ",$data);
+				$data = str_replace("Z"," ",$data);
+				$this->rssData[$curID]["date"] = $data;
+			}
 			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
 			if($this->isDiv) $this->rssData[$curID]["div"] .= "<br/>".$data;
 		}
