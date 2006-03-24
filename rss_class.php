@@ -27,9 +27,8 @@ class RSS {
 	var $isEntryTitle = false;
 	var $isDiv = false;
 	var $isID = false;
-	var $isLink = false;
 
-	var $isRSS = false;
+	var $isOnet = false;
 
 	
 
@@ -48,6 +47,7 @@ class RSS {
 
 		$this->print_to_file($filename);
 		
+		print "</body></html>";		
 	}
 
 	function print_to_file($filename) {
@@ -57,8 +57,6 @@ class RSS {
 			print "<b>".$this->rssData[$a]["title"]."</b> - ";
 			print $this->rssData[$a]["date"]."<br/>";
 			print $this->rssData[$a]["div"]."<br/><br/>";
-			print "<a href=\"".$this->rssData[$a]["link"]."\" target=\"_new\">";
-			print $this->rssData[$a]["link"]."</a><br/>";
 			$a++;
 		}
 
@@ -80,11 +78,11 @@ class RSS {
 		}
 
 		while ($data = fread($fp, 4096)) {
-   		if (!xml_parse($this->RSSparser, $data, feof($fp))) {
-       	die(sprintf("Blad XML: %s at line %d",
+   			if (!xml_parse($this->RSSparser, $data, feof($fp))) {
+       			die(sprintf("Blad XML: %s at line %d",
                    xml_error_string(xml_get_error_code($this->RSSparser)),
                    xml_get_current_line_number($this->RSSparser)));
-   		}
+   			}
 		}
 		xml_parser_free($this->RSSparser);
 	}
@@ -92,7 +90,6 @@ class RSS {
 	function startElement($parser, $name, $attrs) {
 
 		switch($name) {
-			case "RSS" : $this->isRSS = true; break;
 			case "ITEM" :
 			case "ENTRY" : $this->rssData[] = array(); $this->curID++; $this->inEntry = true; break;
 			case "TITLE" : $this->isEntryTitle = true; break;
@@ -100,7 +97,6 @@ class RSS {
 			case "DIV" : $this->isDiv = true; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = true; break;
-			case "LINK" : $this->isLink = true; break;
 		}
  
 
@@ -108,7 +104,6 @@ class RSS {
 
 	function endElement($parser, $name) {
 		switch($name) {
-			case "RSS" : $this->isRSS = false; break;
 			case "ITEM" :
 			case "ENTRY" : $this->inEntry = false; break;
 			case "TITLE" : $this->isEntryTitle = false; break;
@@ -116,7 +111,6 @@ class RSS {
 			case "DIV" : $this->isDiv = false; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = false; break;
-			case "LINK" : $this->isLink = false; break;
 		}
 	}
 
@@ -130,9 +124,6 @@ class RSS {
 			}
 			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
 			if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
-			if($this->isRSS) {
-				if($this->isLink) $this->rssData[$curID]["link"] = $data;
-			}
 		}
 	}
 
