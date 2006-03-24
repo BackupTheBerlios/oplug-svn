@@ -28,6 +28,8 @@ class RSS {
 	var $isDiv = false;
 	var $isID = false;
 
+	var $isOnet = false;
+
 	
 
 	function RSS() {
@@ -35,14 +37,14 @@ class RSS {
 		print "<meta http-equiv=\"content-type\" content=\"application/xhtml+xml; charset=UTF-8\"/>";
 		print "</head><body>";
 		print "<br/>RSS feed reader v" . $this->version . " by OpLUG<br/>";
-		print "Now Blogger support only<br/><br/>";
+		print "RSS feed and Blogger Atom support<br/><br/>";
 	
 		$this->get_channels($this->chanfile);
 
 		$a=0;
 
 		while($this->channels[$a]!=null) {
-			ereg('^.*xml',$this->channels[$a++],$chan);
+			ereg('^[A-Za-z0-9:\/\.\-]*',$this->channels[$a++],$chan);
 			$this->parse($chan[0]);
 		}
 
@@ -54,8 +56,10 @@ class RSS {
 	function print_to_file($filename) {
 		$a=0;
 		while($a<=$this->curID) {
-			print "<h2>".$this->rssData[$a]["title"]."</h2>";
-			print "<p>".$this->rssData[$a]["dev"]."</p>";
+			print "<hr/>";
+			print "<b>".$this->rssData[$a]["title"]."</b> - ";
+			print $this->rssData[$a]["date"]."<br/>";
+			print $this->rssData[$a]["div"]."<br/><br/>";
 			$a++;
 		}
 
@@ -89,10 +93,12 @@ class RSS {
 	function startElement($parser, $name, $attrs) {
 
 		switch($name) {
-			case "GENERATOR" : if($attrs["URL"]!="http://www.blogger.com/") die("To nie jest blogger.. Koncze..<br/>"); break;
+			case "ITEM" :
 			case "ENTRY" : $this->rssData[] = array(); $this->curID++; $this->inEntry = true; break;
 			case "TITLE" : $this->isEntryTitle = true; break;
+			case "DESCRIPTION" :
 			case "DIV" : $this->isDiv = true; break;
+			case "PUBDATE" :
 			case "CREATED" : $this->isDate = true; break;
 		}
  
@@ -101,11 +107,13 @@ class RSS {
 
 	function endElement($parser, $name) {
 		switch($name) {
+			case "ITEM" :
 			case "ENTRY" : $this->inEntry = false; break;
 			case "TITLE" : $this->isEntryTitle = false; break;
+			case "DESCRIPTION" :
 			case "DIV" : $this->isDiv = false; break;
+			case "PUBDATE" :
 			case "CREATED" : $this->isDate = false; break;
-			case "LINK" : $this->isLink = false; break;
 		}
 	}
 
@@ -114,7 +122,7 @@ class RSS {
 			$curID = $this->curID;
 			if($this->isDate) $this->rssData[$curID]["date"] = $data;
 			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
-			if($this->isDiv) $this->rssData[$curID]["dev"] = $data;
+			if($this->isDiv) $this->rssData[$curID]["div"] .= "<br/>".$data;
 		}
 	}
 
