@@ -1,6 +1,30 @@
 body {
-	
+	margin: 0;
+	padding: 0;
 }
+
+.main {
+	width: 800px;
+	margin: 0px auto;
+}
+
+.notka {
+	margin: 30px 0 30px 0;
+}
+
+	.notka .tytul {
+		margin: 10px 0 4px 0;
+		padding: 0;
+	}
+	
+	.notka .data {
+		margin-bottom: 20px;
+	}
+	
+	.notka .tresc {
+		padding-bottom: 30px;
+		border-bottom: 1px solid #CCC;
+	}
 
 A:link {
 	color: #bbb;

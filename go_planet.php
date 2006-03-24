@@ -17,6 +17,10 @@
  
 <body>
 
+<div class="baner"></div>
+
+<div class="main">
+
 <?php
 
 require_once("rss_class.php");
@@ -27,7 +31,7 @@ $a=0;
 
 while($a<=$rss->curID) {
 	print "<div class=\"notka\">";
-	print "<h2>".$rss->rssData[$a]["title"]."</h2>";
+	print "<h2 class=\"tytul\">".$rss->rssData[$a]["title"]."</h2>";
 	print "<div class=\"data\">".$rss->rssData[$a]["date"]."</div>";
 	print "<div class=\"tresc\">".$rss->rssData[$a]["div"]."</div>";
 	print "</div>";
@@ -38,6 +42,8 @@ print "<br/>RSS feed reader v" . $rss->version . " by OpLUG<br/>";
 print "RSS feed and Blogger Atom support<br/><br/>";
 
 ?>
+
+</div>
 
 </body>
 </html>
