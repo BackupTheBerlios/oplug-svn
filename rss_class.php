@@ -126,7 +126,7 @@ class RSS {
 				$this->rssData[$curID]["date"] = $data;
 			}
 			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
-			if($this->isDiv) $this->rssData[$curID]["div"] .= "<br/>".$data;
+			if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
 		}
 	}
 
