@@ -31,6 +31,9 @@ class RSS {
 	
 
 	function RSS() {
+		print "<html><head>";
+		print "<meta http-equiv=\"content-type\" content=\"application/xhtml+xml; charset=UTF-8\"/>";
+		print "</head><body>";
 		print "<br/>RSS feed reader v" . $this->version . " by OpLUG<br/>";
 		print "Now Blogger support only<br/><br/>";
 	
@@ -45,12 +48,14 @@ class RSS {
 
 		$this->print_to_file($filename);
 		
+		print "</body></html>";		
 	}
 
 	function print_to_file($filename) {
 		$a=0;
 		while($a<=$this->curID) {
-			print $this->rssData[$a]["title"]."<br/><br/>";
+			print "<h2>".$this->rssData[$a]["title"]."</h2>";
+			print "<p>".$this->rssData[$a]["dev"]."</p>";
 			$a++;
 		}
 
