@@ -4,7 +4,6 @@
 
 //Metody publiczne:
 //	RSS(); - konstruktor;
-//	RSS::print_post($post_id); - wyswietlenio okreslonego posta
 
 class RSS {
 	var $debug = true; // flaga zarezerwowana
@@ -33,12 +32,27 @@ class RSS {
 
 	function RSS() {
 		print "<br/>RSS feed reader v" . $this->version . " by OpLUG<br/>";
-		print "Now Blogger support only<br/>";
-
+		print "Now Blogger support only<br/><br/>";
+	
 		$this->get_channels($this->chanfile);
 
-		$this->parse($this->channels[0]);
+		$a=0;
+
+		while($this->channels[$a]!=null) {
+			ereg('^.*xml',$this->channels[$a++],$chan);
+			$this->parse($chan[0]);
+		}
+
 		$this->print_to_file($filename);
+		
+	}
+
+	function print_to_file($filename) {
+		$a=0;
+		while($a<=$this->curID) {
+			print $this->rssData[$a]["title"]."<br/><br/>";
+			$a++;
+		}
 
 	}
 
@@ -46,14 +60,6 @@ class RSS {
 		
 		$this->channels = file($chanfile);
 		if(!($this->channels[0])) die("Brak kanalow.. Sprawdź plik ".$chanfile."<br/>");
-	return false;
-	}
-
-	function print_to_file($filename) {
-//		if (!($fp = fopen($filename, "a"))) {
-//  		 die("Nie moge otworzyc pliku ".$filename."<br/>");
-//		}
-		print $this->rssData[1]['title'];
 		
 	}
 
@@ -78,8 +84,8 @@ class RSS {
 	function startElement($parser, $name, $attrs) {
 
 		switch($name) {
-			case "GENERATOR" : if($attrs["URL"]!="http://www.blogger.com/") die("To nie jest blogger.. Koncze..<br/>");
-			case "ENTRY" : $this->inEntry = true; break;
+			case "GENERATOR" : if($attrs["URL"]!="http://www.blogger.com/") die("To nie jest blogger.. Koncze..<br/>"); break;
+			case "ENTRY" : $this->rssData[] = array(); $this->curID++; $this->inEntry = true; break;
 			case "TITLE" : $this->isEntryTitle = true; break;
 			case "DIV" : $this->isDiv = true; break;
 			case "CREATED" : $this->isDate = true; break;
@@ -100,9 +106,10 @@ class RSS {
 
 	function XMLcharacterData($parser, $data){
 		if($this->inEntry) {
-			if($this->isDate) print "<br/>".$data."<br/>";
-			if($this->isEntryTitle) print "<b>".$data."</b><br/><br/>";
-			if($this->isDiv) print $data."<br/><br/>";
+			$curID = $this->curID;
+			if($this->isDate) $this->rssData[$curID]["date"] = $data;
+			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
+			if($this->isDiv) $this->rssData[$curID]["dev"] = $data;
 		}
 	}
 
