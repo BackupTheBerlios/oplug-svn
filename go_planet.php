@@ -38,8 +38,9 @@ while($a<=$rss->curID) {
 	$a++;
 }
 
-print "<br/>RSS feed reader v" . $rss->version . " by OpLUG<br/>";
-print "RSS feed and Blogger Atom support<br/><br/>";
+print "<div class=\"credits\">";
+$rss->print_credits();
+print "</div>";
 
 ?>
 

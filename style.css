@@ -46,21 +46,26 @@ body {
 	z-index: 1;	  	
 }
 
-.notka {
-	margin: 30px 0 30px 0;
-}
+	.notka {
+		margin: 30px 0 30px 0;
+	}
 
-	.notka .tytul {
-		margin: 10px 0 4px 0;
-		padding: 0;
-	}
-	
-	.notka .data {
-		margin-bottom: 20px;
-	}
-	
-	.notka .tresc {
-		padding-bottom: 30px;
-		border-bottom: 1px solid #CCC;
-		text-align: justify;
+		.notka .tytul {
+			margin: 10px 0 4px 0;
+			padding: 0;
+		}
+		
+		.notka .data {
+			margin-bottom: 20px;
+		}
+		
+		.notka .tresc {
+			padding-bottom: 30px;
+			border-bottom: 1px solid #CCC;
+			text-align: justify;
+		}
+		
+	.credits {
+		color: #999;
+		text-align: right;
 	}
