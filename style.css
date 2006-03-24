@@ -1,11 +1,49 @@
+A:link {
+	color: #bbb;
+	text-decoration: none;
+}
+
+A:visited {
+	color: #bbb;
+	text-decoration: none;
+}
+
 body {
 	margin: 0;
 	padding: 0;
+	background-color: #92C400;
+	position: relative;
+	top: -100px;
 }
+
+.baner {
+	width: 800px;
+	height: 220px;
+	margin: 0px auto;
+	background: url('http://www.encyclopedie-enligne.com/Images/2/200px-tux.png') top right no-repeat;
+	position: relative;
+	top: 100px;
+	z-index: 2;
+}
+
+	.baner a {
+	display: block;
+	padding-top: 57px;
+	font-size: 70px;
+	color: #000;
+	}
 
 .main {
 	width: 800px;
-	margin: 0px auto;
+	margin: 0px auto -100px auto;
+	font-family: Tahoma, Verdana, sans-serif, Helvetica;
+  	font-size: 13px;
+  	background-color: #FFF;
+  	padding: 15px;
+  	border-top: 1px solid #485F00;
+  	border-left: 1px solid #485F00;
+  	border-right: 1px solid #485F00; 
+	z-index: 1;	  	
 }
 
 .notka {
@@ -24,22 +62,5 @@ body {
 	.notka .tresc {
 		padding-bottom: 30px;
 		border-bottom: 1px solid #CCC;
+		text-align: justify;
 	}
-
-#credits {
-	width: 100%;
-	text-align: center;
-	border-top: 1px solid #000;
-	border-bottom: 1px solid #000;
-	background-color: #ddd;
-}
-
-A:link {
-	color: #777;
-	text-decoration: none;
-}
-
-A:visited {
-	color: #777;
-	text-decoration: none;
-}

@@ -17,7 +17,7 @@
  
 <body>
 
-<div class="baner"></div>
+<div class="baner"><a href="http://linux.opole.pl">OpLUG Planet</a></div>
 
 <div class="main">
 
