@@ -9,7 +9,7 @@ class RSS {
 	var $debug = true; // flaga zarezerwowana
 
 	var $url_base = "http://linux.opole.pl/";
-	var $filename = "planeta.php"; // Plik do wygenerowania
+	var $filename = "index.html"; // Plik do wygenerowania
 	var $filename_short = "planetka.php"; // plik ze skrotami..
 	var $chanfile = "channels.rss"; // plik z kanalami w postaci URL
 	var $channels = array(); // tablica kanalow do przegladniecia
@@ -18,7 +18,7 @@ class RSS {
 	var $RSSparser; // Maszynka do wyciagania informacji z RSS :]
 
 	var $rssVersion = 2.0;
-	var $rssInfo = array(); // Info na tema feeda
+	var $rssInfo = array(); // Info na temat feeda
 	var $rssData = array(); // A tutaj wlasnie beda wszystkie informacje wyciagniete z RSS'a
 
 	var $curID = -1;
