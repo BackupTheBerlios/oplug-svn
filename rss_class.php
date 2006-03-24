@@ -44,6 +44,16 @@ class RSS {
 
 	}
 
+	function print_credits() {
+		print "RSS feed reader v" . $this->version . " by OpLUG<br/>";
+		print "RSS feed and Blogger Atom support<br/>";
+
+	}
+
+	function print_post($id) {
+		
+	}
+
 	function get_channels($chanfile) {
 		
 		$this->channels = file($chanfile);

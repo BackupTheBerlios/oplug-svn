@@ -26,12 +26,20 @@ body {
 		border-bottom: 1px solid #CCC;
 	}
 
+#credits {
+	width: 100%;
+	text-align: center;
+	border-top: 1px solid #000;
+	border-bottom: 1px solid #000;
+	background-color: #ddd;
+}
+
 A:link {
-	color: #bbb;
+	color: #777;
 	text-decoration: none;
 }
 
 A:visited {
-	color: #bbb;
+	color: #777;
 	text-decoration: none;
 }
