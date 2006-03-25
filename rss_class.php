@@ -102,6 +102,8 @@ class RSS {
 			case "DIV" : $this->isDiv = true; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = true; break;
+			case "IMG" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "<img src=\"".$attrs["SRC"]."\" alt=\"\">"; break;
+			case "A" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "<a href=\"".$attrs["HREF"]."\">"; break;
 		}
  
 
@@ -119,6 +121,7 @@ class RSS {
 			case "DIV" : $this->isDiv = false; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = false; break;
+			case "A" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "</a>"; break;
 		}
 	}
 
