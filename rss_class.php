@@ -11,7 +11,6 @@ class RSS {
 	var $url_base = "http://linux.opole.pl/";
 	var $filename = "index.html"; // Plik do wygenerowania
 	var $filename_short = "planetka.php"; // plik ze skrotami..
-	var $chanfile = "channels.rss"; // plik z kanalami w postaci URL
 	var $channels = array(); // tablica kanalow do przegladniecia
 	var $version = "1.0";
 
@@ -28,12 +27,13 @@ class RSS {
 	var $isDiv = false;
 	var $isID = false;
 
-	var $isOnet = false;
+	var $isRSS = false;
+	var $isAtom = false;
 
 	
 
-	function RSS() {
-		$this->get_channels($this->chanfile);
+	function RSS($chanfile) {
+		$this->get_channels($chanfile);
 
 		$a=0;
 
@@ -50,8 +50,8 @@ class RSS {
 
 	}
 
-	function print_post($id) {
-		
+	function get_data_string($id) {
+		return $this->rssData[$id]["date"]["day"]."/".$this->rssData[$id]["date"]["month"]."/".$this->rssData[$id]["date"]["year"];
 	}
 
 	function get_channels($chanfile) {
@@ -82,6 +82,8 @@ class RSS {
 	function startElement($parser, $name, $attrs) {
 
 		switch($name) {
+			case "RSS" : $this->isRSS = true; break;
+			case "FEED" : $this->isAtom = true; break;
 			case "ITEM" :
 			case "ENTRY" : $this->rssData[] = array(); $this->curID++; $this->inEntry = true; break;
 			case "TITLE" : $this->isEntryTitle = true; break;
@@ -96,6 +98,8 @@ class RSS {
 
 	function endElement($parser, $name) {
 		switch($name) {
+			case "RSS" : $this->isRSS = false; break;
+			case "FEED" : $this->isAtom = false; break;
 			case "ITEM" :
 			case "ENTRY" : $this->inEntry = false; break;
 			case "TITLE" : $this->isEntryTitle = false; break;
@@ -107,16 +111,45 @@ class RSS {
 	}
 
 	function XMLcharacterData($parser, $data){
-		if($this->inEntry) {
-			$curID = $this->curID;
-			if($this->isDate) {
-				$data = str_replace("T"," ",$data);
-				$data = str_replace("Z"," ",$data);
-				$this->rssData[$curID]["date"] = $data;
+		if($this->isRSS||$this->isAtom) {
+			if($this->inEntry) {
+				$curID = $this->curID;
+				if($this->isDate) {
+					$this->rssData[$curID]["date"] = array();
+					if($this->isRSS) {
+						$data = explode(" ",$data);
+						$this->rssData[$curID]["date"]["year"] = $data[3];
+						switch($data[2]) {
+							case "Jan" : $this->rssData[$curID]["date"]["month"] = "01"; break;
+							case "Feb" : $this->rssData[$curID]["date"]["month"] = "02"; break;
+							case "Mar" : $this->rssData[$curID]["date"]["month"] = "03"; break;
+							case "Apr" : $this->rssData[$curID]["date"]["month"] = "04"; break;
+							case "May" : $this->rssData[$curID]["date"]["month"] = "05"; break;
+							case "Jun" : $this->rssData[$curID]["date"]["month"] = "06"; break;
+							case "Jul" : $this->rssData[$curID]["date"]["month"] = "07"; break;
+							case "Aug" : $this->rssData[$curID]["date"]["month"] = "08"; break;
+							case "Sep" : $this->rssData[$curID]["date"]["month"] = "09"; break;
+							case "Oct" : $this->rssData[$curID]["date"]["month"] = "10"; break;
+							case "Nov" : $this->rssData[$curID]["date"]["month"] = "11"; break;
+							case "Dec" : $this->rssData[$curID]["date"]["month"] = "12"; break;
+						}
+						
+						$this->rssData[$curID]["date"]["day"] = $data[1];
+					}else if($this->isAtom) {
+						ereg('^[0-9\-]*',$data,$data);
+						$data = explode("-",$data[0]);
+						$this->rssData[$curID]["date"]["year"] = $data[0];
+						$this->rssData[$curID]["date"]["month"] = $data[1];
+						$this->rssData[$curID]["date"]["day"] = $data[2];
+
+					}
+					
+				}
+				if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
+				if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
 			}
-			if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
-			if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
 		}
+
 	}
 
 }

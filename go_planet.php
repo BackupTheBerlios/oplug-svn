@@ -25,14 +25,14 @@
 
 require_once("rss_class.php");
 
-$rss = new RSS();
+$rss = new RSS("channels.rss");
 
 $a=0;
 
 while($a<=$rss->curID) {
 	print "<div class=\"notka\">";
 	print "<h2 class=\"tytul\">".$rss->rssData[$a]["title"]."</h2>";
-	print "<div class=\"data\">".$rss->rssData[$a]["date"]."</div>";
+	print "<div class=\"data\">".$rss->get_data_string($a)."</div>";
 	print "<div class=\"tresc\">".$rss->rssData[$a]["div"]."</div>";
 	print "</div>";
 	$a++;
