@@ -109,6 +109,7 @@ class RSS {
 
 	function endElement($parser, $name) {
 		switch($name) {
+			case "BR" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "<br/>"; break;
 			case "RSS" : $this->isRSS = false; break;
 			case "FEED" : $this->isAtom = false; break;
 			case "ITEM" :
