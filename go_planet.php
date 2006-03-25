@@ -31,9 +31,9 @@ $a=0;
 
 while($a<=$rss->curID) {
 	print "<div class=\"notka\">";
-	print "<h2 class=\"tytul\">".$rss->rssData[$a]["title"]."</h2>";
+	print "<h2 class=\"tytul\">".$rss->get_title($a)."</h2>";
 	print "<div class=\"data\">".$rss->get_data_string($a)."</div>";
-	print "<div class=\"tresc\">".$rss->rssData[$a]["div"]."</div>";
+	print "<div class=\"tresc\">".$rss->get_content($a)."</div>";
 	print "</div>";
 	$a++;
 }

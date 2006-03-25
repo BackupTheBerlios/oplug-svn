@@ -3,7 +3,9 @@
 // Na razie nie jest to duzo, ale od czegos trzeba zaczac...
 
 //Metody publiczne:
-//	RSS(); - konstruktor;
+//	RSS($chanfile); - konstruktor; Jako parametr pobiera nazwe pliku z kanalami.
+//  print_credits() - wyswietla info..
+//  get_data_string($id) - wyswietla date posta o numerze $id..
 
 class RSS {
 	var $debug = true; // flaga zarezerwowana
@@ -50,8 +52,17 @@ class RSS {
 
 	}
 
+
+	function get_title($id) {
+		return $this->rssData[$id]["title"];
+	}
+
 	function get_data_string($id) {
 		return $this->rssData[$id]["date"]["day"]."/".$this->rssData[$id]["date"]["month"]."/".$this->rssData[$id]["date"]["year"];
+	}
+
+	function get_content($id) {
+		return $this->rssData[$id]["div"];
 	}
 
 	function get_channels($chanfile) {
