@@ -4,8 +4,11 @@
 
 //Metody publiczne:
 //	RSS($chanfile); - konstruktor; Jako parametr pobiera nazwe pliku z kanalami.
-//  print_credits() - wyswietla info..
-//  get_data_string($id) - wyswietla date posta o numerze $id..
+//	print_credits() - wyswietla info..
+//	get_data_string($id) - wyswietla date posta o numerze $id..
+//	get_title($id)
+//	get_content($id)
+//	get_short_content($id)
 
 class RSS {
 	var $debug = true; // flaga zarezerwowana
@@ -32,6 +35,7 @@ class RSS {
 	var $isRSS = false;
 	var $isAtom = false;
 
+
 	
 
 	function RSS($chanfile) {
@@ -43,7 +47,25 @@ class RSS {
 			ereg('^[A-Za-z0-9:\/\.\-]*',$this->channels[$a++],$chan);
 			$this->parse($chan[0]);
 		}
+		
+		$this->sort_posts();
 
+	}
+
+	function sort_posts() { // Sortowanie babelkowe :]
+		$a = 0; $b = 0;
+		while($a <= $this->curID-1) {
+			$b=0;
+			while($b <= $this->curID-1) {
+				if($this->rssData[$b]["date"]["num"] < $this->rssData[$b+1]["date"]["num"]) {
+					$temp = $this->rssData[$b];
+					$this->rssData[$b] = $this->rssData[$b+1];
+					$this->rssData[$b+1] = $temp;
+				}
+			$b++;
+			}
+		$a++;
+		}
 	}
 
 	function print_credits() {
@@ -58,6 +80,7 @@ class RSS {
 	}
 
 	function get_data_string($id) {
+		print $this->rssData[$id]["date"]["num"]."<br/>";
 		return $this->rssData[$id]["date"]["day"]."/".$this->rssData[$id]["date"]["month"]."/".$this->rssData[$id]["date"]["year"];
 	}
 
@@ -70,6 +93,10 @@ class RSS {
 		$this->channels = file($chanfile);
 		if(!($this->channels[0])) die("Brak kanalow.. Sprawdź plik ".$chanfile."<br/>");
 		
+	}
+
+	function get_short_content($id) {
+// Czeka na implementacje..
 	}
 
 	function parse($channel) {
@@ -150,12 +177,14 @@ class RSS {
 						}
 						
 						$this->rssData[$curID]["date"]["day"] = $data[1];
+						$this->rssData[$curID]["date"]["num"] = $data[3].$this->rssData[$curID]["date"]["month"].$data[1];
 					}else if($this->isAtom) {
 						ereg('^[0-9\-]*',$data,$data);
 						$data = explode("-",$data[0]);
 						$this->rssData[$curID]["date"]["year"] = $data[0];
 						$this->rssData[$curID]["date"]["month"] = $data[1];
 						$this->rssData[$curID]["date"]["day"] = $data[2];
+						$this->rssData[$curID]["date"]["num"] = $data[0].$data[1].$data[2];
 
 					}
 					
