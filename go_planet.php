@@ -32,6 +32,7 @@ $a=0;
 while($a<=$rss->curID) {
 	print "<div class=\"notka\">";
 	print "<h2 class=\"tytul\">".$rss->get_title($a)."</h2>";
+	print "<div class=\"autor\">".$rss->get_author($a)."</div>";
 	print "<div class=\"data\">".$rss->get_data_string($a)."</div>";
 	print "<div class=\"tresc\">".$rss->get_content($a)."</div>";
 	print "</div>";

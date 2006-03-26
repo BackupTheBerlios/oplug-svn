@@ -31,6 +31,7 @@ class RSS {
 	var $isEntryTitle = false;
 	var $isDiv = false;
 	var $isID = false;
+	var $isAuthor = false;
 
 	var $isRSS = false;
 	var $isAtom = false;
@@ -77,6 +78,10 @@ class RSS {
 
 	function get_title($id) {
 		return $this->rssData[$id]["title"];
+	}
+
+	function get_author($id) {
+		return $this->rssData[$id]["author"];
 	}
 
 	function get_data_string($id) {
@@ -129,6 +134,8 @@ class RSS {
 			case "DIV" : $this->isDiv = true; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = true; break;
+			case "NAME" :
+			case "AUTHOR" : $this->isAuthor = true; break;
 			case "IMG" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "<img src=\"".$attrs["SRC"]."\" alt=\"\">"; break;
 			case "A" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "<a href=\"".$attrs["HREF"]."\">"; break;
 		}
@@ -148,6 +155,8 @@ class RSS {
 			case "DIV" : $this->isDiv = false; break;
 			case "PUBDATE" :
 			case "CREATED" : $this->isDate = false; break;
+			case "NAME" :
+			case "AUTHOR" : $this->isAuthor = false; break;
 			case "A" : if($this->isAtom) $this->rssData[$this->curID]["div"] .= "</a>"; break;
 		}
 	}
@@ -191,6 +200,8 @@ class RSS {
 				}
 				if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
 				if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
+
+				if($this->isAuthor) $this->rssData[$curID]["author"] = $data;
 			}
 		}
 
