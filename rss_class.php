@@ -80,7 +80,7 @@ class RSS {
 	}
 
 	function get_data_string($id) {
-		print $this->rssData[$id]["date"]["num"]."<br/>";
+		//print $this->rssData[$id]["date"]["num"]."<br/>";
 		return $this->rssData[$id]["date"]["day"]."/".$this->rssData[$id]["date"]["month"]."/".$this->rssData[$id]["date"]["year"];
 	}
 
