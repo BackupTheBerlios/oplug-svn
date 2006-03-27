@@ -3,7 +3,7 @@
 // Na razie nie jest to duzo, ale od czegos trzeba zaczac...
 
 //Metody publiczne:
-//	RSS($chanfile); - konstruktor; Jako parametr pobiera nazwe pliku z kanalami.
+//	RSS($chanfile,$limit); - konstruktor; Jako parametr pobiera nazwe pliku z kanalami i liczbe postow z kanalu do pobrania
 //	print_credits() - wyswietla info..
 //	get_data_string($id) - wyswietla date posta o numerze $id..
 //	get_title($id)
@@ -36,15 +36,20 @@ class RSS {
 	var $isRSS = false;
 	var $isAtom = false;
 
+	var $counter = 0;
+	var $post_limit;
+
 
 	
 
-	function RSS($chanfile) {
+	function RSS($chanfile,$limit) {
+		$this->post_limit = $limit;
 		$this->get_channels($chanfile);
 
 		$a=0;
 
 		while($this->channels[$a]!=null) {
+			$this->counter = 0;
 			ereg('^[A-Za-z0-9:\/\.\-]*',$this->channels[$a++],$chan);
 			$this->parse($chan[0]);
 		}
@@ -128,7 +133,11 @@ class RSS {
 			case "RSS" : $this->isRSS = true; break;
 			case "FEED" : $this->isAtom = true; break;
 			case "ITEM" :
-			case "ENTRY" : $this->rssData[] = array(); $this->curID++; $this->inEntry = true; break;
+			case "ENTRY" :
+				{
+					if($this->counter >= $this->post_limit) break;
+					$this->rssData[] = array(); $this->curID++; $this->inEntry = true; $this->counter++; break;
+				}
 			case "TITLE" : $this->isEntryTitle = true; break;
 			case "DESCRIPTION" :
 			case "DIV" : $this->isDiv = true; break;

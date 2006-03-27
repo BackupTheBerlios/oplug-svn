@@ -25,7 +25,7 @@
 
 require_once("rss_class.php");
 
-$rss = new RSS("channels.rss");
+$rss = new RSS("channels.rss",3);
 
 $a=0;
 
