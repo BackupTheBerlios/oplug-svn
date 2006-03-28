@@ -81,8 +81,6 @@ class RSS {
 
 	var $counter = 0;
 	var $post_limit;
-
-
 	
 
 	function RSS($chanfile,$limit) {
@@ -223,6 +221,9 @@ class RSS {
 		if($this->isRSS||$this->isAtom) {
 			if($this->inEntry) {
 				$curID = $this->curID;
+				if($this->isEntryTitle) { 
+					if(!$this->rssData[$curID]["title"]) $this->rssData[$curID]["title"] = $data;
+				}
 				if($this->isDate) {
 					$this->rssData[$curID]["date"] = array();
 					if($this->isRSS) {
@@ -256,9 +257,8 @@ class RSS {
 					}
 					
 				}
-				if($this->isEntryTitle) $this->rssData[$curID]["title"] = $data;
-				if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
 
+				if($this->isDiv) $this->rssData[$curID]["div"] .= $data;
 				if($this->isAuthor) $this->rssData[$curID]["author"] = $data;
 				if($this->isLink) $this->rssData[$curID]["link"] = $data;
 			}
