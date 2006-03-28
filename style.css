@@ -1,13 +1,3 @@
-A:link {
-	color: #bbb;
-	text-decoration: none;
-}
-
-A:visited {
-	color: #bbb;
-	text-decoration: none;
-}
-
 body {
 	margin: 0;
 	padding: 0;
@@ -23,7 +13,7 @@ body {
 	background: url('http://www.encyclopedie-enligne.com/Images/2/200px-tux.png') top right no-repeat;
 	position: relative;
 	top: 100px;
-	z-index: 2;
+	z-index: 1;
 }
 
 	.baner a {
@@ -31,6 +21,7 @@ body {
 	padding-top: 57px;
 	font-size: 70px;
 	color: #000;
+	text-decoration: none;
 	}
 
 .main {
@@ -43,7 +34,6 @@ body {
   	border-top: 1px solid #485F00;
   	border-left: 1px solid #485F00;
   	border-right: 1px solid #485F00; 
-	z-index: 1;	  	
 }
 
 	.notka {
@@ -53,10 +43,24 @@ body {
 		.notka .tytul {
 			margin: 10px 0 4px 0;
 			padding: 0;
+			position: relative;
+			z-index: 2;
+		}
+
+			.notka .tytul a {
+				color: #000;
+				text-decoration: none;
+			}
+			
+		.notka .autor 
+			position: relative;
+			z-index: 2;
 		}
 		
 		.notka .data {
 			margin-bottom: 20px;
+			position: relative;
+			z-index: 2;
 		}
 		
 		.notka .tresc {
@@ -64,6 +68,11 @@ body {
 			border-bottom: 1px solid #CCC;
 			text-align: justify;
 		}
+
+			.notka .tresc a {
+				color: #bbb;
+				text-decoration: none;
+			}
 		
 	.credits {
 		color: #999;
