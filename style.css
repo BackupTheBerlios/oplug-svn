@@ -4,6 +4,7 @@ body {
 	background-color: #92C400;
 	position: relative;
 	top: -100px;
+	background: #506a00 url('tlo.png') top left repeat-x;
 }
 
 .baner {
@@ -52,27 +53,40 @@ body {
 				text-decoration: none;
 			}
 			
-		.notka .autor 
-			position: relative;
-			z-index: 2;
-		}
-		
-		.notka .data {
+		.notka .info {
 			margin-bottom: 20px;
-			position: relative;
-			z-index: 2;
+			color: #CCC;
 		}
+			
+			.notka .info .autor {
+				position: relative;
+				z-index: 2;
+			}
+			
+			.notka .info .data {
+				
+				position: relative;
+				z-index: 2;
+			}
 		
 		.notka .tresc {
 			padding-bottom: 30px;
 			border-bottom: 1px solid #CCC;
 			text-align: justify;
+			line-height: 25px;
 		}
 
 			.notka .tresc a {
-				color: #bbb;
+				color: #6B8F00;
 				text-decoration: none;
 			}
+			
+			.notka .tresc blockquote
+				{
+				border-left: 10px solid #91C300;
+				padding-left: 15px;
+				color: #5C4500;
+				}
 		
 	.credits {
 		color: #999;
