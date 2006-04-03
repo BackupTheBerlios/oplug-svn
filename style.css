@@ -11,7 +11,7 @@ body {
 	width: 800px;
 	height: 220px;
 	margin: 0px auto;
-	background: url('http://www.encyclopedie-enligne.com/Images/2/200px-tux.png') top right no-repeat;
+	background: url('http://linux.opole.pl/images/3.png') top right no-repeat;
 	position: relative;
 	top: 100px;
 	z-index: 1;
@@ -81,12 +81,17 @@ body {
 				text-decoration: none;
 			}
 			
-			.notka .tresc blockquote
-				{
+			.notka .tresc blockquote {
 				border-left: 10px solid #91C300;
 				padding-left: 15px;
 				color: #5C4500;
-				}
+			}
+				
+			.notka .tresc code {
+				font-weight: bold;
+				font-family: 'Courier New', Courier, monospace;
+			}
+				
 		
 	.credits {
 		color: #999;
